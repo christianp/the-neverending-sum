@@ -46,7 +46,7 @@ function add_modulo(input, level) {
         target: (input+diff)%mod
     }
 }
-ops.push(new Op(add_modulo, 3, 1, 4));
+ops.push(new Op(add_modulo, 3, 5, 4));
 
 function add_several(input, level) {
     level += 1;
@@ -91,7 +91,7 @@ function find_digit_sum(input, level) {
     }
     return {target, description};
 }
-ops.push(new Op(find_digit_sum, 1.2, 0, 5, 11));
+ops.push(new Op(find_digit_sum, 1.2, 1, 5, 11));
 
 function multiply(input, level) {
     const n = n_digit_number(level);
@@ -112,7 +112,7 @@ function multiply_modulo(input, level) {
         target: (input*b)%mod
     }
 }
-ops.push(new Op(multiply_modulo, 3, 1, 5));
+ops.push(new Op(multiply_modulo, 3, 5, 5));
 
 function multiply_several(input, level) {
     const nd = number_of_digits(input) * level;
@@ -129,7 +129,7 @@ function multiply_several(input, level) {
         description: to_add
     }
 }
-ops.push(new Op(multiply_several, 2, 2, 6));
+ops.push(new Op(multiply_several, 4, 6, 6));
 
 function integer_divide(input, level) {
     const n = n_digit_number(Math.min(number_of_digits(input)-1, level));
@@ -138,7 +138,7 @@ function integer_divide(input, level) {
         description: `number of times ${n} goes into ${input}`
     }
 }
-ops.push(new Op(integer_divide, 3, 0, Infinity, 10));
+ops.push(new Op(integer_divide, 3, 2, Infinity, 10));
 
 function remainder(input, level) {
     let n = n_digit_number(level);
@@ -159,34 +159,36 @@ function find_gcd(input, level) {
         description: `greatest common divisor of ${input} and ${b}`
     };
 }
-ops.push(new Op(find_gcd, 1, 3, Infinity, 12));
+ops.push(new Op(find_gcd, 5, 6, Infinity, 12));
 
 function find_lcm(input, level) {
-    const b = n_digit_number(number_of_digits(level+1));
+    const b = n_digit_number(level+1);
     return {
         target: lcm(input, b), 
         description: `lowest common multiple of ${input} and ${b}`
     };
 }
-ops.push(new Op(find_lcm, 1, 3, Infinity, 12));
+ops.push(new Op(find_lcm, 6, 6, Infinity, 12));
 
 function biggest_power_under(input, level) {
-    const p = Math.floor(Math.log(input)/Math.log(level));
-    const target = Math.pow(level, p);
+    const base = randrange(2,level);
+    const p = Math.floor(Math.log(input)/Math.log(base));
+    const target = Math.pow(base, p);
     return {
         target: target, 
-        description: `largest power of ${level} less than or equal to${input}`
+        description: `largest power of ${base} less than or equal to ${input}`
     }
 }
-ops.push(new Op(biggest_power_under, 1, 2, Infinity, 2));
+ops.push(new Op(biggest_power_under, 1, 5, Infinity, 2));
 
 function find_arithmetic_mean(input, level) {
     let total = input;
     const nd = number_of_digits(input);
     const ns = [input];
     const denom = level+2;
+    const base = n_digit_number(nd);
     for(let i=0;i<level+1;i++) {
-        let n = n_digit_number(nd);
+        let n = n_digit_number(nd) + base;
         total += n;
         if(i==level) {
             let d = (denom - total)%denom;
@@ -203,7 +205,36 @@ function find_arithmetic_mean(input, level) {
         description: `arithmetic mean of ${join_and(ns)}`
     }
 }
-ops.push(new Op(find_arithmetic_mean, 2, 0));
+ops.push(new Op(find_arithmetic_mean, 2, 3));
+
+function find_mode(input,level) {
+    const n = level+2;
+    const nd = number_of_digits(input);
+    const numbers = [];
+    for(let i=0;i<n;i++) {
+        numbers.push(randrange(1,Math.pow(10,nd)));
+    }
+    const number_set = new Set(numbers);
+    let max = 0;
+    let maxx = undefined;
+    const out = [];
+    for(let x of number_set) {
+        const count = randrange(1,5);
+        if(count>max) {
+            max = count;
+            maxx = x;
+        }
+        for(let i=0;i<count;i++) {
+            out.splice(randrange(0,out.length),0,x);
+        }
+    }
+    out.splice(randrange(0,out.length),0,maxx);
+    return {
+        target: maxx,
+        description: `modal value of ${join_and(out)}`
+    }
+}
+ops.push(new Op(find_mode,1,2));
 
 function in_base(input,level) {
     const base = level>=8 ? level+3 : level+2;
@@ -214,4 +245,4 @@ function in_base(input,level) {
         description: `${input} in ${base_desc}`
     };
 }
-ops.push(new Op(in_base, 3, 3));
+ops.push(new Op(in_base, 2, 7));

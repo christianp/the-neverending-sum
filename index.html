@@ -5,9 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="vue.js"></script>
         <link rel="stylesheet" href="style.css"></link>
+        <title>The Never-Ending Sum</title>
     </head>
     <body>
-        <div id="game">
+        <main id="game">
             <div class="sums">
                 <sum v-for="sum in solved_sums" :sum="sum" :key="sum.id"></sum>
                 <div class="current-sum" v-if="current_sum">
@@ -15,9 +16,13 @@
                 </div>
             </div>
             <footer>
-                {{level}}
+                <button class="easier" @click="easier" :disabled="level==0">easier</button>
+                <span class="level">{{face}}</span>
+                <button class="harder" @click="harder">harder</button>
+                <button @click="try_reset" class="reset">reset</button>
+                <a href="about.html">about</a>
             </footer>
-        </div>
+        </main>
         <script src="game.js" type="module"></script>
     </body>
 </html>

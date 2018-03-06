@@ -5,20 +5,40 @@ import {ops,Op} from './ops.js';
 window.maths = maths;
 
 class Sum {
-    constructor(input, level, op) {
+    constructor(input, level) {
         this.id = Sum.acc++;
         this.input = input;
         this.level = level;
-        this.op = op;
-        const {target, description} = op.instance(input, level);
-        this.target = target;
-        this.description = description;
         this.answer = '';
         this.working_out = '';
         const hue = Math.random()*360;
         const sat = randrange(70, 80);
         const val = randrange(70, 80);
         this.bg = `hsl(${hue}, ${sat}%, ${val}%)`;
+    }
+
+    make_op(op) {
+        this.op = op;
+        const {target, description} = op.instance(this.input, this.level);
+        this.target = target;
+        this.description = description;
+    }
+
+    toJSON() {
+        return {
+            input: this.input,
+            level: this.level,
+            target: this.target,
+            description: this.description,
+            answer: this.answer,
+            working_out: this.working_out,
+            bg: this.bg
+        };
+    }
+    static load(data) {
+        const s = new Sum();
+        Object.assign(s,data);
+        return s;
     }
 }
 Sum.acc = 0;
@@ -75,17 +95,13 @@ Vue.component('sum', {
     watch: {
         "sum.working_out": function(v){
             const lines = v.trim().split('\n');
-            const last_line = lines[lines.length-1];
-            this.sum.answer = last_line;
+            const last_line = lines[lines.length-1].trim();
+            if(!isNaN(last_line)) {
+                this.sum.answer = last_line;
+            }
         },
     },
     methods: {
-        harder: function() {
-            this.$emit('harder');
-        }, 
-        easier: function() {
-            this.$emit('easier');
-        }, 
         next: function() {
             if(this.correct) {
                 this.$emit('next');
@@ -100,9 +116,7 @@ Vue.component('sum', {
     }, 
     template: `
     <div :class="[{active: active, correct: correct}, 'sum']" :style="{'background-color': sum.bg}">
-        <button class="easier" @click="easier" :disabled="sum.level==0">easier</button>
         <p class="op" v-html="sum.description"></p>
-        <button class="harder" @click="harder">harder</button>
         <span :class="[{active: answer_number &lt; sum.target}, 'higher']">higher</span>
         <div class="equals">=</div>
         <div class="answer">
@@ -120,13 +134,61 @@ const data = {
     solved_sums: [], 
     level: 10,
     number: 1,
-    current_sum: undefined
+    current_sum: undefined,
+    storage_key: 'neverending-sum',
+    faces: ["😇","😎","😁","😀","😄","😃","😅","😂","😆","😬","😏","😐","😑","😕","😒","😔","😓","😞","😟","😢","😖","😣","😠","😦","😧","😨","😥","😭","😤","😡","😈"]
 }
 
 const vm = new Vue({
     el: '#game', 
     data: data, 
+    watch: {
+        current_sum: function() {
+            this.save();
+        }
+    },
+    computed: {
+        face: function() {
+            const n = Math.min(this.faces.length-1,this.level);
+            return this.faces[n];
+        }
+    },
     methods: {
+        save: function() {
+            const data = {
+                solved_sums: this.solved_sums.map(s=>s.toJSON()),
+                current_sum: this.current_sum.toJSON(),
+                level: this.level,
+                number: this.number,
+            }
+            localStorage.setItem(this.storage_key, JSON.stringify(data));
+        },
+        load: function() {
+            const j = localStorage.getItem(this.storage_key);
+            if(!j) {
+                this.reset();
+                return;
+            }
+            const d = JSON.parse(j);
+            this.solved_sums = d.solved_sums.map(Sum.load);
+            this.current_sum = Sum.load(d.current_sum);
+            this.level = d.level;
+            this.number = d.number;
+            Sum.acc = this.solved_sums.length + 1;
+        },
+        try_reset: function() {
+            if(!confirm("Reset all your data? You'll lose all your solved sums")) {
+                return;
+            }
+            this.reset();
+        },
+        reset: function() {
+            this.solved_sums = [];
+            this.level = 1;
+            this.number = 1;
+            this.current_sum = undefined;
+            this.new_sum();
+        },
         harder: function() {
             this.level += 1;
             this.new_sum();
@@ -156,10 +218,10 @@ const vm = new Vue({
             if(!op) {
                 throw(new Error("no ops"));
             }
-            console.log(`level ${this.level} ${level} (${op.from} ${level/op.scale})`);
-            this.current_sum = new Sum(this.number, level, op);
+            this.current_sum = new Sum(this.number, level);
+            this.current_sum.make_op(op);
         }
     }
 })
-vm.new_sum();
+vm.load();
 window.vm = vm;

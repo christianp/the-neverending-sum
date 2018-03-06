@@ -6,6 +6,10 @@ html {
     font-feature-settings: "case";
     font-size: 3.2vw;
 }
+body {
+    margin: 0;
+}
+
 .current-sum {
     padding-right: 1em;
 }
@@ -15,6 +19,7 @@ html {
     grid-auto-columns: min-content;
     grid-gap: 1em;
     align-items: start;
+    overflow-x: scroll;
 }
 
 .sum {
@@ -22,8 +27,8 @@ html {
     display: grid;
     grid-template-columns: 5em 5em min-content max-content min-content;
     grid-template-areas: 
-        "easier harder . higher ."
         "op op equals answer next"
+        ". . . higher ."
         ". . . lower ."
         "working-out working-out working-out working-out ."
     ;
@@ -33,23 +38,19 @@ html {
     grid-auto-flow: column dense;
     text-align: center;
 }
+button {
+    font-size: 1em;
+    border: none;
+}
 .sum button {
     margin: 0;
-    font-size: 1em;
     background: hsla(0,0%,100%,0.8);
-    border: none;
 }
 .sum:not(.active) button {
     visibility: hidden;
 }
 .op {
     grid-area: op;
-}
-.easier {
-    grid-area: easier;
-}
-.harder {
-    grid-area: harder;
 }
 .lower {
     grid-area: lower;
@@ -91,17 +92,35 @@ html {
     resize: vertical;
     font-size: 1em;
 }
-footer {
-    position: absolute;
-    bottom: 0;
-    background: #eee;
-    display: block;
-    width: 100%;
-    padding: 0.5em 1em 0em 1em;
+#game {
+    width: 100vw;
+    height: 100vh;
     box-sizing: border-box;
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr max-content;
 }
-body {
-    margin: 0;
+footer {
+    background: #eee;
+    padding: 0.5em 1em 0.2em 1em;
+    display: grid;
+    grid-column-gap: 1em;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    justify-content: space-evenly;
+}
+footer button {
+    background: hsl(200,70%,75%);
+    line-height: 1em;
+    padding: 0.2em 0.5em;
+}
+
+.reset {
+    background: hsl(0,70%,50%);
+    color: white;
+}
+.easier {
+    background: hsl(120,70%,75%);
 }
 
 @media screen and (max-width: 500px) {
@@ -111,7 +130,6 @@ body {
     .sum {
         grid-template-columns: 1fr 1fr;
         grid-template-areas: 
-            "easier harder"
             "op op"
             "equals answer" 
             "lower higher"
