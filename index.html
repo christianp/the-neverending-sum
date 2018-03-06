@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="vue.js"></script>
+        <link rel="stylesheet" href="style.css"></link>
+    </head>
+    <body>
+        <div id="game">
+            <div class="sums">
+                <sum v-for="sum in solved_sums" :sum="sum" :key="sum.id"></sum>
+                <div class="current-sum" v-if="current_sum">
+                    <sum :sum="current_sum" :active="true" :key="current_sum.id" @harder="harder" @easier="easier" @next="next"></sum>
+                </div>
+            </div>
+            <footer>
+                {{level}}
+            </footer>
+        </div>
+        <script src="game.js" type="module"></script>
+    </body>
+</html>

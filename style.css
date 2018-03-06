@@ -1,0 +1,125 @@
+@import url('inter-ui/inter-ui.css');
+
+html {
+    font-variant: tabular-nums;
+    font-family: 'Inter UI',sans-serif;
+    font-feature-settings: "case";
+    font-size: 3.2vw;
+}
+.current-sum {
+    padding-right: 1em;
+}
+.sums {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min-content;
+    grid-gap: 1em;
+    align-items: start;
+}
+
+.sum {
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 5em 5em min-content max-content min-content;
+    grid-template-areas: 
+        "easier harder . higher ."
+        "op op equals answer next"
+        ". . . lower ."
+        "working-out working-out working-out working-out ."
+    ;
+    align-items: center;
+    justify-items: center;
+    grid-gap: 0.1em 1em;
+    grid-auto-flow: column dense;
+    text-align: center;
+}
+.sum button {
+    margin: 0;
+    font-size: 1em;
+    background: hsla(0,0%,100%,0.8);
+    border: none;
+}
+.sum:not(.active) button {
+    visibility: hidden;
+}
+.op {
+    grid-area: op;
+}
+.easier {
+    grid-area: easier;
+}
+.harder {
+    grid-area: harder;
+}
+.lower {
+    grid-area: lower;
+}
+.higher {
+    grid-area: higher;
+}
+.higher:not(.active), .lower:not(.active) {
+    visibility: hidden;
+}
+.sum.correct .higher, .sum.correct .lower {
+  display: none;
+}
+.equals {
+    grid-area: equals;
+}
+.next {
+    grid-area: next;
+    justify-self: stretch;
+}
+.next:not(.active) {
+    visibility: hidden;
+}
+.answer {
+    grid-area: answer;
+}
+.answer input {
+    width: 5em;
+    text-align: center;
+    font-family: monospace;
+    font-size: 1em;
+    border: none;
+    border-bottom: 0.1em solid hsla(0,0%,0%,0.6);
+    background: hsla(0,0%,100%,0.8);
+}
+.working-out {
+    grid-area: working-out;
+    width: 100%;
+    resize: vertical;
+    font-size: 1em;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    background: #eee;
+    display: block;
+    width: 100%;
+    padding: 0.5em 1em 0em 1em;
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+}
+
+@media screen and (max-width: 500px) {
+    html {
+        font-size: 16px;
+    }
+    .sum {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+            "easier harder"
+            "op op"
+            "equals answer" 
+            "lower higher"
+            "next next"
+            "working-out working-out"
+        ;
+        grid-gap: 0.5em;
+    }
+    .next {
+    }
+}
