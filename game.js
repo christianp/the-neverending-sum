@@ -86,7 +86,11 @@ Vue.component('sum', {
     }, 
     computed: {
         answer_number: function() {
-            return parseInt(this.sum.answer);
+            const answer = this.sum.answer;
+            if(!answer.match(/^\d+$/)) {
+                return NaN;
+            }
+            return parseInt(answer);
         }, 
         correct: function() {
             return this.answer_number == this.sum.target;
