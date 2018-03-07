@@ -1,4 +1,4 @@
-import {choice,number_of_digits,randrange} from './maths.js';
+import {choice,weighted_choice,number_of_digits,randrange} from './maths.js';
 import * as maths from './maths.js';
 import {ops,Op} from './ops.js';
 
@@ -17,11 +17,9 @@ class Sum {
         this.bg = `hsl(${hue}, ${sat}%, ${val}%)`;
     }
 
-    make_op(op) {
-        this.op = op;
-        const {target, description} = op.instance(this.input, this.level);
-        this.target = target;
-        this.description = description;
+    set_target(op) {
+        this.target = op.target;
+        this.description = op.description;
     }
 
     toJSON() {
@@ -212,18 +210,19 @@ const vm = new Vue({
             const level = Math.floor(this.level / number_of_digits(this.number));
             const ops = this.ops
                 .filter(x=>(this.current_sum===undefined || x!=this.current_sum.op) && x.from<=level/x.scale && x.to>=level/x.scale && x.from_input <= this.number)
-                .filter(x=>{
-                    const s = x.instance(this.number,level);
-                    return s.target>1;
-                })
             ;
-            
-            const op = choice(ops);
+            const instances = ops
+                .map(x=>{ return {op:x,instance:x.instance(this.number,level)} })
+                .filter(x=>x.instance.target>1)
+            ;
+ 
+            const weight_of = x=>1/(1+Math.abs(level-x.op.from));
+            const op = weighted_choice(instances,weight_of);
             if(!op) {
                 throw(new Error("no ops"));
             }
             this.current_sum = new Sum(this.number, level);
-            this.current_sum.make_op(op);
+            this.current_sum.set_target(op.instance);
         }
     }
 })

@@ -2,6 +2,18 @@ export function choice(list) {
     const i = Math.floor(Math.random()*list.length);
     return list[i];
 }
+export function weighted_choice(list,key) {
+    const weights = list.map(key);
+    const total = weights.reduce((a,b)=>a+b,0);
+    const r = Math.random()*total;
+    let t = 0;
+    for(let [i,w] of weights.entries()) {
+        t += w;
+        if(t>=r) {
+            return list[i];
+        }
+    }
+}
 export function randrange(a, b) {
     return Math.floor(Math.random()*(b-a)+a);
 }

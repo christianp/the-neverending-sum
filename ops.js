@@ -1,7 +1,8 @@
 import {randrange, partition, number_of_digits, gcd, lcm, digits_of, sum, n_digit_number, join_and, base_digits_of} from './maths.js';
 
 export class Op {
-    constructor(fn, scale, from, to=Infinity, from_input = 0) {
+    constructor(name, fn, scale, from, to=Infinity, from_input = 0) {
+        this.name = name;
         this.fn = fn;
         this.scale = scale;
         this.from = from;
@@ -34,7 +35,7 @@ function add(input, level) {
         }
     }
 }
-ops.push(new Op(add, 3, 0, 2));
+ops.push(new Op('add a number',add, 3, 0, 2));
 
 function add_modulo(input, level) {
     [input, level] = [Math.max(input, level), Math.min(input, level)];
@@ -46,7 +47,7 @@ function add_modulo(input, level) {
         target: (input+diff)%mod
     }
 }
-ops.push(new Op(add_modulo, 3, 5, 4));
+ops.push(new Op('add a number modulo another',add_modulo, 3, 5, 4));
 
 function add_several(input, level) {
     level += 1;
@@ -69,7 +70,7 @@ function add_several(input, level) {
         description: to_add
     }
 }
-ops.push(new Op(add_several, 1, 2));
+ops.push(new Op('add several numbers',add_several, 1, 2));
 
 function find_digit_sum(input, level) {
     level += 1;
@@ -91,7 +92,7 @@ function find_digit_sum(input, level) {
     }
     return {target, description};
 }
-ops.push(new Op(find_digit_sum, 1.2, 1, 5, 11));
+ops.push(new Op('find the sum of Nth powers of the digits',find_digit_sum, 1.2, 1, 5, 11));
 
 function multiply(input, level) {
     const n = n_digit_number(level);
@@ -100,7 +101,7 @@ function multiply(input, level) {
         description: `${input} × ${n}`
     }
 }
-ops.push(new Op(multiply, 2, 0, Infinity, 1));
+ops.push(new Op('multiply by a number',multiply, 2, 0, Infinity, 1));
 
 function multiply_modulo(input, level) {
     [input, level] = [Math.max(input, level), Math.min(input, level)];
@@ -112,7 +113,7 @@ function multiply_modulo(input, level) {
         target: (input*b)%mod
     }
 }
-ops.push(new Op(multiply_modulo, 3, 5, 5));
+ops.push(new Op('multiply by a number, modulo another number',multiply_modulo, 3, 5, 5));
 
 function multiply_several(input, level) {
     const nd = number_of_digits(input) * level;
@@ -129,7 +130,7 @@ function multiply_several(input, level) {
         description: to_add
     }
 }
-ops.push(new Op(multiply_several, 4, 6, 6));
+ops.push(new Op('multiply by several numbers',multiply_several, 4, 6, 6));
 
 function integer_divide(input, level) {
     const n = n_digit_number(Math.min(number_of_digits(input)-1, level));
@@ -138,7 +139,7 @@ function integer_divide(input, level) {
         description: `number of times ${n} goes into ${input}`
     }
 }
-ops.push(new Op(integer_divide, 3, 2, Infinity, 10));
+ops.push(new Op('divide by a number',integer_divide, 3, 2, Infinity, 10));
 
 function remainder(input, level) {
     let n = n_digit_number(level);
@@ -150,7 +151,7 @@ function remainder(input, level) {
         description: `remainder when dividing ${input} by ${n}`
     }
 }
-ops.push(new Op(remainder, 3, 2, Infinity, 100));
+ops.push(new Op('find the remainder when dividing by a number',remainder, 3, 2, Infinity, 100));
 
 function find_gcd(input, level) {
     const b = n_digit_number(number_of_digits(input)+level);
@@ -159,7 +160,7 @@ function find_gcd(input, level) {
         description: `greatest common divisor of ${input} and ${b}`
     };
 }
-ops.push(new Op(find_gcd, 5, 6, Infinity, 12));
+ops.push(new Op('find the greatest common divisor with a number',find_gcd, 5, 6, Infinity, 12));
 
 function find_lcm(input, level) {
     const b = n_digit_number(level+1);
@@ -168,7 +169,7 @@ function find_lcm(input, level) {
         description: `lowest common multiple of ${input} and ${b}`
     };
 }
-ops.push(new Op(find_lcm, 6, 6, Infinity, 12));
+ops.push(new Op('find the lowest common multiple with a number',find_lcm, 6, 6, Infinity, 12));
 
 function biggest_power_under(input, level) {
     const base = randrange(2,level);
@@ -179,7 +180,7 @@ function biggest_power_under(input, level) {
         description: `largest power of ${base} less than or equal to ${input}`
     }
 }
-ops.push(new Op(biggest_power_under, 1, 5, Infinity, 2));
+ops.push(new Op('find the largest power of a given number under the input',biggest_power_under, 1, 5, Infinity, 2));
 
 function find_arithmetic_mean(input, level) {
     let total = input;
@@ -205,7 +206,7 @@ function find_arithmetic_mean(input, level) {
         description: `arithmetic mean of ${join_and(ns)}`
     }
 }
-ops.push(new Op(find_arithmetic_mean, 2, 3));
+ops.push(new Op('find the arithmetic mean of a list of numbers',find_arithmetic_mean, 2, 3));
 
 function find_mode(input,level) {
     const n = level+2;
@@ -234,7 +235,7 @@ function find_mode(input,level) {
         description: `modal value of ${join_and(out)}`
     }
 }
-ops.push(new Op(find_mode,1,2));
+ops.push(new Op('find the modal value in a list',find_mode,1,2));
 
 function in_base(input,level) {
     const base = level>=8 ? level+3 : level+2;
@@ -245,4 +246,4 @@ function in_base(input,level) {
         description: `${input} in ${base_desc}`
     };
 }
-ops.push(new Op(in_base, 2, 7));
+ops.push(new Op('rewrite in a given base',in_base, 2, 7));
