@@ -1,0 +1,30 @@
+{
+    "name": "The Never-Ending Sum",
+    "short_name": "Never-Ending Sum",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#81d3ef",
+    "theme_color": "#81d3ef",
+    "icons": [
+        {
+            "src": "icons/neverending-sum-128.png",
+            "type": "image/png",
+            "sizes": "128x128"
+        },
+        {
+            "src": "icons/neverending-sum-144.png",
+            "type": "image/png",
+            "sizes": "144x144"
+        },
+        {
+            "src": "icons/neverending-sum-152.png",
+            "type": "image/png",
+            "sizes": "152x152"
+        },
+        {
+            "src": "icons/neverending-sum-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        }
+    ]
+}

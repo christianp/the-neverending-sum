@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="0.91 r13725"
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 192 192"
+   height="192"
+   width="192"
+   inkscape:export-filename="C:\javascript\neverending-sum\icons\neverending-sum-128.png"
+   inkscape:export-xdpi="60"
+   inkscape:export-ydpi="60"
+   sodipodi:docname="neverending-sum.svg">
+  <sodipodi:namedview
+     inkscape:window-maximized="1"
+     inkscape:window-y="-9"
+     inkscape:window-x="-9"
+     inkscape:window-height="1001"
+     inkscape:window-width="1920"
+     showgrid="false"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="px"
+     inkscape:cy="-26.344935"
+     inkscape:cx="442.5087"
+     inkscape:zoom="1.4"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     units="px" />
+  <defs
+     id="defs4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1"
+     transform="translate(426.89972,2946.6884)">
+    <rect
+       style="opacity:1;fill:#81d3ef;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:50;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4699"
+       width="192"
+       height="192"
+       x="-426.89972"
+       y="-2946.6885" />
+    <g
+       id="g4690"
+       transform="matrix(0.05943917,0,0,0.05943917,-390.9431,-2606.2324)">
+      <path
+         d="m 935.6076,-4021.8193 c 138.355,38.7698 59.80643,194.0226 -59.27594,211.5338 -172.51802,25.369 -292.766,-152.279 -284.36181,-307.8279 12.75265,-236.0322 248.68418,-388.2974 471.53565,-360.126 292.2282,36.9415 476.3724,331.6718 430.3433,612.8502 -56.3426,344.1804 -406.6828,558.5385 -741.11752,496.1876 -396.36556,-73.8971 -636.75999,-472.8777 -558.58029,-860.3885 89.41401,-443.1955 537.9113,-710.7186 972.90121,-618.1692 488.0145,103.831 781.6004,599.7519 675.4209,1080.0615 -117.4182,531.1481 -658.9826,849.8815 -1182.82683,730.6821 -572.839391,-130.3482 -915.92448,-716.0212 -784.2193,-1281.8871 142.739776,-613.2756 771.18045,-980.012 1377.76083,-836.2423 652.6049,154.6784 1042.37,824.7019 886.9196,1470.8503"
+         sodipodi:t0="0"
+         sodipodi:argument="-18.576344"
+         sodipodi:radius="1250.8967"
+         sodipodi:revolution="3"
+         sodipodi:expansion="0.69999999"
+         sodipodi:cy="-4021.8193"
+         sodipodi:cx="935.6076"
+         id="path4355"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:28.95432091;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="spiral" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4537"
+         style="font-style:normal;font-weight:normal;font-size:450.21044922px;line-height:125%;font-family:'cmu concrete roman';-inkscape-font-specification:'cmu concrete roman';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><textPath
+           id="textPath4547"
+           xlink:href="#path4355"><tspan
+   id="tspan4539"><tspan
+     x="-1346.3224"
+     y="-387.72821"
+     id="tspan4541">+÷×-+÷×-+÷×-+÷×-+÷×-+÷×-+÷×-+÷×-+÷×-+÷×-+÷×-+÷×-+÷×-+÷×-+÷×-+÷×-</tspan></tspan><tspan
+   id="tspan4543"><tspan
+     x="-1346.3224"
+     y="175.03485"
+     id="tspan4545">+÷×-</tspan></tspan></textPath></text>
+    </g>
+  </g>
+</svg>
