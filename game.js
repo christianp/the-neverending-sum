@@ -204,19 +204,27 @@ const vm = new Vue({
         next: function() {
             this.number = this.current_sum.target;
             this.solved_sums.push(this.current_sum);
+            this.slice_number();
             this.new_sum();
         }, 
+        slice_number: function() {
+            const s = this.number+'';
+            const len = randrange(1,s.length+1);
+            const i = randrange(0,s.length-len);
+            const ns = s.slice(i,i+len);
+            this.number = parseInt(ns);
+        },
         new_sum: function() {
             const level = Math.floor(this.level / number_of_digits(this.number));
             const ops = this.ops
-                .filter(x=>(this.current_sum===undefined || x!=this.current_sum.op) && x.from<=level/x.scale && x.to>=level/x.scale && x.from_input <= this.number)
+                .filter(x=>(this.current_sum===undefined || x!=this.current_sum.op) && x.from_input <= this.number)
             ;
             const instances = ops
                 .map(x=>{ return {op:x,instance:x.instance(this.number,level)} })
                 .filter(x=>x.instance.target>1)
             ;
  
-            const weight_of = x=>1/(1+Math.abs(level-x.op.from));
+            const weight_of = x=>1/(Math.abs(level-x.op.from)*x.op.scale + 10);
             const op = weighted_choice(instances,weight_of);
             if(!op) {
                 throw(new Error("no ops"));
@@ -229,14 +237,3 @@ const vm = new Vue({
 vm.load();
 window.vm = vm;
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('service-worker.js').then(function(registration) {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(err) {
-      // registration failed :(
-      console.log('ServiceWorker registration failed: ', err);
-    });
-  });
-}

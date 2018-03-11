@@ -71,6 +71,11 @@ export function digits_of(n) {
 }
 
 export function base_digits_of(n,b) {
+    n = Math.floor(n);
+    b = Math.floor(b);
+    if(b<2) {
+        return [];
+    }
     const ds = [];
     while(n) {
         const d = n%b;
